@@ -87,20 +87,22 @@
                                 </fieldset >
                                 {% endfor %}
                                 <p class="m-0 p-0" id="precioTotal" name="">Precio total: $</p>
+                                <p class="m-0 p-0">*Los descuentos solo seran aplicados si el comprador esta logueado*</p>
                               {% endif %}
                             </div>
                             <div class="modal-footer">
                               <label for="cantidad">Codigo Descuento:</label>
                               <input class="input-sm" type="text" name="inputDes" id="inputDes" value='' max=" "min="" role="button">
-                              <button type="button" class="btn btn-outline-warning" name="checkDescuento" id="checkDescuento">Checkear descuento</button>
+                              <button type="button" class="btn btn-outline-warning" name="checkDescuento" id="checkDescuento" onclick="query()">Validar descuento</button>
                               <a href="/limpiarCarroto/" class="btn btn-secondary">Vaciar carrito</a>
                               {% if carrito|length == 0 %}
-                              <a  class="btn btn-success disabled">Comprar</a>
+                              <a class="btn btn-success disabled">Comprar</a>
                               {% else %}
-                              <a href="/boleta/" target="_blank" class="btn btn-success">Comprar</a>
+                              <a href="/boleta/" id="comprarCarrito" target="_blank" class="btn btn-success">Comprar</a>
                               {% endif %}
                             </div>
                           </div>
+                          <p id="statusSuscripcion" style="text-align: center; color: #1D8348;"></p>
                         </div>
                       </div>
                     </div>
@@ -159,6 +161,19 @@
      
     </div>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">CommunityPlant descuentos</strong>
+          <small>Justo ahora</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          <p>¡Descuento del 15% en todos los productos usando el codigo "BlackFriday"!</p>
+        </div>
+      </div>
+    </div>
+
 
  <!-- Footer de la pagina --> 
  <div style="background-color: #04a05f59; margin-top: 2%;">
@@ -202,7 +217,7 @@
   </footer>
   </div>
 
-  <!-- Fin de la pagina -->
+  
     <!-- Mi js! -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
     <script src="{% static 'CommunityPlant/js/apiDescuento.js'%}"> </script>
@@ -217,7 +232,97 @@
     -->
     <script src="{% static 'CommunityPlant/js/JsonConversion.js'%} "></script>
     <script src="{% static 'CommunityPlant/js/apiDescuento.js' %}"></script>
-    <script src="{% static 'CommunityPlant/js/precio.js' %}" ></script>
+    <script src="{% static 'CommunityPlant/js/toast.js' %}"></script>
+    <!--<script src="{% static 'CommunityPlant/js/precio.js' %}" ></script>-->
+    <script>
+    var suscripcion;
+    var is_sub;
+    is_sub = false;
+    const log_user = '{{request.session.user.username}}';
+    function query(){
+        var username;
+        $.ajax({
+          url:"http://127.0.0.1:8000/api/lista_suscritos?format=json",
+          type: "GET",
+          success: function(resultado){
+            console.log(log_user);
+            for (elem of resultado){
+              console.log(elem);
+              username = elem.username
+              suscripcion = elem.suscripcion;
+              if (username == log_user){
+                console.log('paso el log user');
+                console.log(suscripcion);
+                if (suscripcion){
+                  console.log('si hay desuento');
+                  document.getElementById('statusSuscripcion').innerText='Tienes un descuento del 5% por ser suscriptor.';
+                  suscripcion = true;
+                  is_sub = true;
+                } 
+                else{
+                  console.log('no hay descuento');
+                }
+              } else{
+                console.log('no hay user conectado');
+              }
+            };
+          }
+        });
+      };
+
+      $(document).ready(function(){
+          var precioTotal;
+          var descuento;
+          var precioTotalCalculado;          
+          precioTotal = 0;
+          descuento = 0;
+          precioTotalCalculado = 0;
+          
+          $('.calculoPrecioUnitario').each(function(index){
+              precioTotal += parseInt($(this).html());  
+          });
+          
+          $('#precioTotal').html('Precio total: $' + (precioTotal));
+          
+          $('#checkDescuento').click(function() {
+            setTimeout(function() {
+            descuento = parseInt($('#valorDescuento').html());
+            if(descuento > 0){
+              if(is_sub == true){
+                precioTotalCalculado = 0.95*(precioTotal - (precioTotal * (descuento/100)));
+                $('#precioTotal').html('Precio total: $' + 0.95*(precioTotal - (precioTotal * (descuento/100))));
+              }
+              else{
+                precioTotalCalculado = precioTotal - (precioTotal * (descuento/100));
+                $('#precioTotal').html('Precio total: $' + (precioTotal - (precioTotal * (descuento/100))));
+              }
+            }
+            else if (is_sub == true) {
+              precioTotalCalculado = 0.95*precioTotal;
+              $('#precioTotal').html('Precio total: $' + 0.95*precioTotal);
+            }
+            else{
+              precioTotalCalculado = precioTotal;
+              $('#precioTotal').html('Precio total: $' + precioTotal);
+            };
+            }, 1000);
+            $.ajax({
+              url:`/descSub/${precioTotalCalculado}/`,
+              type: "GET", 
+              success: function(resultado){
+                console.log(resultado);
+              }
+            });
+          });
+         }); 
+        
+
+        var botonComprar;
+        botonComprar = document.getElementById('comprarCarrito');
+        botonComprar.addEventListener('click', function(){
+          setTimeout(function() {location.replace('/limpiarCarroto/');}, 1000);
+        })
+      </script>
   </body>
   
 </html>

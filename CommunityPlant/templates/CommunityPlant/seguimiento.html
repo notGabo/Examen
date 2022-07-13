@@ -64,39 +64,39 @@
             <hr class="bg-info">
         </div>
         <div class="container">
-            <div class="text-center" style="margin-top: 2%">
-                <h5>Ingrese numero de seguimiento</h5>
+            <div class="text-center" style="margin-top: 1%">
+                <h5>Ingrese número de seguimiento</h5>
                 <input id='consultaSeguimiento' name='consultaSeguimiento' type="text">
                 <button type="button" name="btnConsultaPedido" id="btnConsultaPedido" class="btn btn-success d-grid mx-auto" style="margin-top: 1%;">Consultar pedido</button>
                 <p id="mensajeConsulta" name="mensajeConsulta"></p>
               </div>
               <div name="progreso" id="progreso" class="container">
-                <div class='progress'>
-                  <div id="barrita_progreso" class='progress-bar progress-bar-striped progress-bar-animated bg-success' role='progressbar' style='width: 0%'></div>
+                <div class='progress' style="margin-top: 1%;">
+                  <div id="barrita_progreso" class='progress-bar progress-bar-striped progress-bar-animated bg-success' role='progressbar' style='width: 0%;'></div>
                 </div>
                   <div class='row'>
                     <div class='col'>
                         <center>
-                          <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-truck-delivery' width='60' height='60' viewBox='0 0 24 24' stroke-width='1.5' stroke='#2c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+                          <svg style='text-align:center ;' xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-package' width='60' height='60' viewBox='0 0 24 24' stroke-width='1.5' stroke='#2c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+                            <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
+                            <polyline points='12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3' />
+                            <line x1='12' y1='12' x2='20' y2='7.5' />
+                            <line x1='12' y1='12' x2='12' y2='21' />
+                            <line x1='12' y1='12' x2='4' y2='7.5' />
+                            <line x1='16' y1='5.25' x2='8' y2='9.75' />
+                          </svg>
+                        <p>Se esta preparando el paquete</p>
+                      </center>
+                    </div>
+                    <div class='col'>
+                      <center>
+                        <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-truck-delivery' width='60' height='60' viewBox='0 0 24 24' stroke-width='1.5' stroke='#2c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'>
                           <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
                           <circle cx='7' cy='17' r='2' />
                           <circle cx='17' cy='17' r='2' />
                           <path d='M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5' />
                           <line x1='3' y1='9' x2='7' y2='9' />
                         </svg>
-                        <p>Se esta preparando el paquete</p>
-                      </center>
-                    </div>
-                    <div class='col'>
-                      <center>
-                      <svg style='text-align:center ;' xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-package' width='60' height='60' viewBox='0 0 24 24' stroke-width='1.5' stroke='#2c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-                        <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
-                        <polyline points='12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3' />
-                        <line x1='12' y1='12' x2='20' y2='7.5' />
-                        <line x1='12' y1='12' x2='12' y2='21' />
-                        <line x1='12' y1='12' x2='4' y2='7.5' />
-                        <line x1='16' y1='5.25' x2='8' y2='9.75' />
-                      </svg>
                       <p>El paquete esta en camino</p>
                     </center>
                     </div>
@@ -115,6 +115,7 @@
                   </div>
                   <center><p>Los envios se realizan en dias habiles, entre las 9:00 y 19:00 horas</p></center>
               </div>
+              <button type="button" name="btnNuevoPedido" id="btnNuevoPedido" class="btn btn-warning d-grid mx-auto">Consultar otro pedido</button>
         </div>
     </div>
  <!-- Footer de la pagina --> 

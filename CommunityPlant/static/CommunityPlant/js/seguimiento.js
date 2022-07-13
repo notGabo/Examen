@@ -1,44 +1,5 @@
 function ajaxote() {
     var codigoSeguimiento = $('#consultaSeguimiento').val();
-    // $.ajax({
-    //     url:"http://127.0.0.1:8000/api/lista_boleta?format=json", 
-    //     type: "GET",
-    //         success: function(resultado){
-    //             for (elem of resultado){
-    //                 numBoleta = elem.idBoleta;
-    //                 inputConsulta = $('#consultaSeguimiento').val();
-    //                 encontrada = "<p id='mensajeConsulta' name='mensajeConsulta' style='color:#0BD555;'>El pedido numero "+elem.idBoleta+" se ha encontrado</p>";
-    //                 noEncontrada = "<p id='mensajeConsulta' name='mensajeConsulta' style='color:#FF0000;'>No se ha encontrado el pedido ingresado</p>";
-    //                 console.log(inputConsulta);
-    //                 console.log(elem);
-    //                 console.log(numBoleta);
-    //                 if (inputConsulta == numBoleta){
-    //                     $("#mensajeConsulta")[0].outerHTML = encontrada;
-    //                     $("#btnConsultaPedido").click(ajaxote);
-    //                     $.ajax({
-    //                         url:`http://127.0.0.1:8000/api/detalle_boleta/${codigoSeguimiento}/`,
-    //                         type:"GET"
-    //                     });
-    //                     console.log('Cai en el if')
-    //                     break;
-    //                 }
-    //                 else if (inputConsulta != numBoleta){
-    //                     $("#mensajeConsulta")[0].outerHTML = noEncontrada;
-    //                     $("#btnConsultaPedido").click(ajaxote);
-    //                     console.log('Cai en el elif')
-    //                 }
-    //                 else{
-    //                     $("#mensajeConsulta")[0].outerHTML = noEncontrada;
-    //                     $("#btnConsultaPedido").click(ajaxote);
-    //                     console.log('Cai en el else')
-                        
-    //                 }
-    //             }
-    //         },
-    //         error: function(error){
-    //             console.log(error);
-    //         }
-    // })
     $.ajax({
         url: `/api/detalle_boleta/${codigoSeguimiento}/`,
         type: 'GET',
@@ -72,4 +33,11 @@ function ajaxote() {
 $(document).ready(function(){
     $("#btnConsultaPedido").click(ajaxote);
 });
+
+var botonActualizar;
+botonActualizar = document.getElementById('btnNuevoPedido');
+botonActualizar.addEventListener('click', function(){
+  location.replace('seguimiento.html');
+})
+
 

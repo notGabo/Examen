@@ -4,7 +4,9 @@ from django.shortcuts import render , redirect
 from django.forms.models import model_to_dict
 from django.db.models import F
 from .models import *
-from .forms import RegisterForm 
+from .forms import RegisterForm
+from rest_framework import status
+from rest_framework.response import Response
 
 def index(request):
     context = {} 
@@ -251,16 +253,23 @@ def limpiarCarroto(request):
     return redirect(to="Catalogo")
 
 def boleton(request):
+    descuento = 0
     if len(request.session['carrito']) == 0:
         return redirect(to="Catalogo")
     else:
         datos = {}
         datos['carrito'] = request.session['carrito']
         precioTotal = sum([int(j['cantidad']) * int(j['precio_unitario']) for i, j in request.session['carrito'].items()])
-        descuento = int(request.session['descuento']) if 'descuento' in request.session else 0
-        print('El descuento de la sesion es de ' + str(request.session['descuento']))
+        descuento = int(request.session['descuento']) if 'descuento' in request.session else  0
+        #print('El descuento de la sesion es de ' + str(request.session['descuento']))
         print('El descuento final es de ' + str(descuento))
+        try:
+            if request.session['user']['suscripcion']:
+                descuento += 5
+        except KeyError:
+            descuento = 0
         request.session['descuento'] = 0
+        #precioTotal = int(request.session['precioTotalCalculado'])
         precioTotal = int(precioTotal - (precioTotal*(descuento)/100))
         boletita = boleta(precioTotal = precioTotal, fecha = datetime.datetime.now())
         boletita.save()
@@ -274,3 +283,10 @@ def boleton(request):
 
 def seguimiento(request):
     return render(request, 'CommunityPlant/seguimiento.html')
+
+
+def descSub(request, total):
+    print('Preciototal: ' + str(total))
+    request.session['precioTotalCalculado'] = int(total)
+    print(request.session['precioTotalCalculado'])
+    return Response(status=status.HTTP_200_OK)
