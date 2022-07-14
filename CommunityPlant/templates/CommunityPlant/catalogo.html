@@ -290,16 +290,16 @@
             if(descuento > 0){
               if(is_sub == true){
                 precioTotalCalculado = 0.95*(precioTotal - (precioTotal * (descuento/100)));
-                $('#precioTotal').html('Precio total: $' + 0.95*(precioTotal - (precioTotal * (descuento/100))));
+                $('#precioTotal').html('Precio total: $' + Math.trunc(0.95*(precioTotal - (precioTotal * (descuento/100)))));
               }
               else{
                 precioTotalCalculado = precioTotal - (precioTotal * (descuento/100));
-                $('#precioTotal').html('Precio total: $' + (precioTotal - (precioTotal * (descuento/100))));
+                $('#precioTotal').html('Precio total: $' + Math.trunc((precioTotal - (precioTotal * (descuento/100)))));
               }
             }
             else if (is_sub == true) {
               precioTotalCalculado = 0.95*precioTotal;
-              $('#precioTotal').html('Precio total: $' + 0.95*precioTotal);
+              $('#precioTotal').html('Precio total: $' + Math.trunc((0.95*precioTotal)));
             }
             else{
               precioTotalCalculado = precioTotal;
