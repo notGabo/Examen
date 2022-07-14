@@ -81,7 +81,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Examen.wsgi.application'
-
+DATE_INPUT_FORMATS = ['%d/%m/%Y'] 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

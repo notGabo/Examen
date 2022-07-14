@@ -24,4 +24,5 @@ urlpatterns = [
     path('suscribirse/',suscripcion, name='suscripcion'),
     path('seguimiento.html',seguimiento, name='seguimiento'),
     path('descSub/<total>/',descSub, name='descSub'),
+    path('listaSuscriptores.html',listaSuscriptores, name='Lista Suscriptores'),
 ]

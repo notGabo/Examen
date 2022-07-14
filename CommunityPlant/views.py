@@ -147,7 +147,6 @@ def borrarSolicitud(request, id):
     #return render(request, 'CommunityPlant/revisarSolicitudes.html')
 
 def perfil(request):
-
     contexto = {} 
     contexto['esta_logueado'] = False
     contexto['esta_suscrito'] = False
@@ -155,7 +154,6 @@ def perfil(request):
         if 'user' in request.session:
             contexto['esta_logueado'] = True
             contexto['Usuario'] = request.session['user']
-             
     return render(request, 'CommunityPlant/perfil.html',contexto)
     
 def borrarperfil(request):
@@ -290,3 +288,14 @@ def descSub(request, total):
     request.session['precioTotalCalculado'] = int(total)
     print(request.session['precioTotalCalculado'])
     return Response(status=status.HTTP_200_OK)
+
+def listaSuscriptores(request):
+   #data = dict(request.GET)
+   #nombreUsuario = data['username']
+   #suscripcionUsuario = data['suscripcion']
+   #fechaSuscripcion = data['fecha']
+   #listaSub = Usuarios.objects.filter(username = nombreUsuario,suscripcion = suscripcionUsuario, fechaSus = fechaSuscripcion )
+   #datos = {
+   #    'suscriptores' : listaSub
+   #}
+    return render(request, 'CommunityPlant/listaSuscriptores.html')
