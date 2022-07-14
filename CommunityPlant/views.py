@@ -290,12 +290,5 @@ def descSub(request, total):
     return Response(status=status.HTTP_200_OK)
 
 def listaSuscriptores(request):
-   #data = dict(request.GET)
-   #nombreUsuario = data['username']
-   #suscripcionUsuario = data['suscripcion']
-   #fechaSuscripcion = data['fecha']
-   #listaSub = Usuarios.objects.filter(username = nombreUsuario,suscripcion = suscripcionUsuario, fechaSus = fechaSuscripcion )
-   #datos = {
-   #    'suscriptores' : listaSub
-   #}
+
     return render(request, 'CommunityPlant/listaSuscriptores.html')
